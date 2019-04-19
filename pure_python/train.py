@@ -1,6 +1,6 @@
-from neural_net import NeuralNet
+from pure_python.one_layer_net import OneLayerNet
 from datareader import DataReader
-from vector_ import Vector
+from pure_python.vector_ import Vector
 from datetime import datetime
 
 
@@ -24,10 +24,10 @@ input_height = 28
 input_width = 28
 num_classes = 6
 
-one_layer_net = NeuralNet(input_height * input_width, num_classes)
+one_layer_net = OneLayerNet(input_height * input_width, num_classes)
 
-train_dir = 'data/train'
-test_dir = 'data/test'
+train_dir = '../data/train'
+test_dir = '../data/test'
 
 train_generator = DataReader(train_dir, [input_height, input_width], True, input_channels, num_classes).get_generator()
 test_generator = DataReader(test_dir, [input_height, input_width], False, input_channels, num_classes).get_generator()

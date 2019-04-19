@@ -1,8 +1,8 @@
-from neuron import Neuron
+from pure_python.neuron import Neuron
 from math import pow
 
 
-class NeuralNet:
+class OneLayerNet:
 
     def __init__(self, inputs_count, output_neurons_count):
         self.__inputs_count = inputs_count
