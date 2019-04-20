@@ -10,9 +10,6 @@ class OneLayerNet:
         for j in range(output_neurons_count):
             self.__neurons.append(Neuron(inputs_count))
 
-    def get_error(self):
-        return self.get_error()
-
     def train(self, vector, learning_rate):
 
         for j in range(len(self.__neurons)):
