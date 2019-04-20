@@ -133,7 +133,7 @@ with tf.Session() as sess:
             xs, ds = train_generator.next()
             vector = Vector(xs, ds)
             xs = vector.get_x()
-            ds = vector.get_desire_outputs()
+            ds = vector.get_d()
 
             # And run the training op
             sess.run(train_op, feed_dict={x: xs,
@@ -167,7 +167,7 @@ with tf.Session() as sess:
         xs, ds = test_generator.next()
         vector = Vector(xs, ds)
         xs = vector.get_x()
-        ds = vector.get_desire_outputs()
+        ds = vector.get_d()
 
         prediction = sess.run(tf.nn.softmax(model.output), feed_dict={x: xs})
 

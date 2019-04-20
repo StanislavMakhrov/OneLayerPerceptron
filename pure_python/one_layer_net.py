@@ -21,7 +21,7 @@ class OneLayerNet:
         weights_deltas = [[0] * (len(vector.get_x()) + 1)] * len(self.__neurons)
 
         for j in range(len(self.__neurons)):
-            sigma = (vector.get_desire_outputs()[j] - self.__neurons[j].get_y()) * self.__neurons[j].get_derivative()
+            sigma = (vector.get_d()[j] - self.__neurons[j].get_y()) * self.__neurons[j].get_derivative()
             weights_deltas[j][0] = learning_rate * sigma
             for i in range(len(self.__neurons[j].get_weights())):
                 weights_deltas[j][i] = learning_rate * sigma * vector.get_x()[i]
@@ -29,7 +29,7 @@ class OneLayerNet:
 
         loss = 0
         for j in range(len(self.__neurons)):
-            loss += pow(vector.get_desire_outputs()[j] - self.__neurons[j].get_y(), 2)
+            loss += pow(vector.get_d()[j] - self.__neurons[j].get_y(), 2)
 
         return 0.5 * loss
 
