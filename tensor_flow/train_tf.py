@@ -17,7 +17,7 @@ def get_max_neuron_idx(neurons):
 
 
 # Learning params
-learning_rate = 1e-2
+learning_rate = 1e-4
 num_epochs = 10
 
 # Network params
@@ -169,7 +169,7 @@ with tf.Session() as sess:
         xs = vector.get_x()
         ds = vector.get_d()
 
-        prediction = sess.run(tf.nn.softmax(model.output), feed_dict={x: xs})
+        prediction = sess.run(tf.nn.sigmoid(model.output), feed_dict={x: xs})
 
         d_max_idx = get_max_neuron_idx(list(ds.reshape(ds[0].shape)))
         y_max_idx = get_max_neuron_idx(prediction[0])
