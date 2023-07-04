@@ -24,8 +24,8 @@ class DataReader:
             if i < 0:
                 i = i + 1
             else:
-                [patterns.append(root + '/' + file) for file in files]
-                [labels.append(i) for file in files]
+                [patterns.append(root + "/" + file) for file in files]
+                [labels.append(i) for _ in files]
                 i = i + 1
 
         self.__generator = DataGenerator(patterns, labels, self.__scale_size, self.__shuffle,

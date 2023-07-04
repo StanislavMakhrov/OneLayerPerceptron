@@ -26,13 +26,13 @@ num_classes = 6
 
 one_layer_net = OneLayerNet(input_height * input_width, num_classes)
 
-train_generator = DataReader('../data/train', [input_height, input_width], True, input_channels, num_classes)\
+train_generator = DataReader("../data/train", [input_height, input_width], True, input_channels, num_classes)\
     .get_generator()
-test_generator = DataReader('../data/test', [input_height, input_width], False, input_channels, num_classes)\
+test_generator = DataReader("../data/test", [input_height, input_width], False, input_channels, num_classes)\
     .get_generator()
 
-print('Size of training set: {}'.format(train_generator.get_data_size()))
-print('Size of testing set: {}'.format(test_generator.get_data_size()))
+print("Size of training set: {}".format(train_generator.get_data_size()))
+print("Size of testing set: {}".format(test_generator.get_data_size()))
 
 print("{} Start training...".format(datetime.now()))
 for epoch in range(num_epochs):
