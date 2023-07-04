@@ -5,7 +5,6 @@ import os
 class DataReader:
 
     def __init__(self, data_dir, scale_size, shuffle=False, input_channels=1, nb_classes=5):
-        # Init params
         self.__n_classes = nb_classes
         self.__shuffle = shuffle
         self.__input_channels = input_channels
