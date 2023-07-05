@@ -2,7 +2,6 @@ import numpy as np
 
 
 class Vector:
-
     def __init__(self, x, desired_outputs):
         if len(x.shape) > 2:
             self.__x = list(np.asarray(x).reshape(-2))

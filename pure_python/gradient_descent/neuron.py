@@ -7,7 +7,6 @@ def activation_func(net):
 
 
 class Neuron:
-
     def __init__(self, bias: float, weights: List[float]):
         self.__weights = [bias] + weights
         self.__out = 0.0
