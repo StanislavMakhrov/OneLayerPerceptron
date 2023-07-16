@@ -17,7 +17,7 @@ def get_max_neuron_idx(neurons):
 
 # Learning params
 learning_rate = 1e-6
-num_epochs = 10
+num_epochs = 5
 
 # Network params
 input_channels = 1
@@ -42,7 +42,7 @@ for epoch in range(num_epochs):
     for m in range(train_generator.get_data_size()):
         x, desired = train_generator.next()
         loss += one_layer_net.train(Vector(x, desired), learning_rate)
-    print(f'loss = {loss / train_generator.get_data_size()}')
+    print(f'loss = {(loss / train_generator.get_data_size()):6f}')
     train_generator.reset_pointer()
     train_generator.shuffle_data()
 

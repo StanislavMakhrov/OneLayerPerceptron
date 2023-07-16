@@ -30,7 +30,11 @@ class OneLayerNet:
                 weights_deltas[i + 1] = learning_rate * error * vector.get_x()[i]
             self.__neurons[j].correct_weights(weights_deltas)
 
-        return 0
+        loss = 0
+        for j in range(len(self.__neurons)):
+            loss += abs(vector.get_desired_outputs()[j] - self.__neurons[j].get_out())
+
+        return loss
 
     def test(self, vector):
         y = [0] * len(self.__neurons)
