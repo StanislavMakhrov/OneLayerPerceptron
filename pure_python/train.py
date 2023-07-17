@@ -25,7 +25,7 @@ input_height = 28
 input_width = 28
 num_classes = 6
 
-one_layer_net = gradient_descent.OneLayerNet(input_height * input_width, num_classes)
+one_layer_net = delta_rule.OneLayerNet(input_height * input_width, num_classes)
 
 train_generator = DataReader('../data/train', [input_height, input_width], True, input_channels, num_classes)\
     .get_generator()
@@ -52,7 +52,9 @@ passed = 0
 for i in range(test_generator.get_data_size()):
     x, desired = test_generator.next()
     y = one_layer_net.test(Vector(x, desired))
+    print(f'------------------------------ Test image #{i} ------------------------------')
     print(f'neurons outputs: {y}')
+    print(f'neurons outputs (percent): {"%, ".join([str(round(p*100,2)) for p in y])}%')
 
     d_max_idx = get_max_neuron_idx(desired)
     y_max_idx = get_max_neuron_idx(y)
