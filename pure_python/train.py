@@ -1,5 +1,4 @@
-import pure_python.delta_rule.one_layer_net as delta_rule
-import pure_python.gradient_descent.one_layer_net as gradient_descent
+from pure_python.one_layer_net_grad_descent import OneLayerNet
 from datareader import DataReader
 from pure_python.vector_ import Vector
 from datetime import datetime
@@ -25,7 +24,7 @@ input_height = 28
 input_width = 28
 num_classes = 6
 
-one_layer_net = delta_rule.OneLayerNet(input_height * input_width, num_classes)
+one_layer_net = OneLayerNet(input_height * input_width, num_classes)
 
 train_generator = DataReader('../data/train', [input_height, input_width], True, input_channels, num_classes)\
     .get_generator()

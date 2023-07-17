@@ -1,25 +1,18 @@
-from math import exp
-from typing import List
-
-
-def activation_func(net):
-    return 1.0 / (1.0 + exp(-net))
+from typing import List, Callable
 
 
 class Neuron:
-    def __init__(self, bias: float, weights: List[float]):
+    def __init__(self, bias: float, weights: List[float], activation_func: Callable):
         self.__weights = [bias] + weights
         self.__out = 0.0
         self.__net = 0.0
-
-    def get_derivative(self):
-        return activation_func(self.__net) * (1.0 - activation_func(self.__net))
+        self.__activation_func = activation_func
 
     def calc_out(self, x):
         self.__net = self.__weights[0]
         for i in range(len(x)):
             self.__net += x[i] * self.__weights[i + 1]
-        self.__out = activation_func(self.__net)
+        self.__out = self.__activation_func(self.__net)
 
     def get_out(self):
         return self.__out
