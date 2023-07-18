@@ -25,7 +25,7 @@ class DataGenerator:
         """
         Random shuffle the images and labels
         """
-        images = self.__patterns.copy()
+        patterns = self.__patterns.copy()
         labels = self.__labels.copy()
         self.__patterns = []
         self.__labels = []
@@ -33,7 +33,7 @@ class DataGenerator:
         # create list of permutated index and shuffle data accoding to list
         idx = np.random.permutation(len(labels))
         for i in idx:
-            self.__patterns.append(images[i])
+            self.__patterns.append(patterns[i])
             self.__labels.append(labels[i])
                 
     def reset_pointer(self):

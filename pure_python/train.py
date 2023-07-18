@@ -1,6 +1,6 @@
 from pure_python.one_layer_net_grad_descent import OneLayerNet
 from datareader import DataReader
-from pure_python.vector_ import Vector
+from pure_python.vector import Vector
 from datetime import datetime
 
 
