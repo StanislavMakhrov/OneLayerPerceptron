@@ -45,7 +45,7 @@ class DataGenerator:
         if self.__shuffle:
             self.shuffle_data()
 
-    def next(self):
+    def next(self, one_hot_encoding=True):
         """
         This function gets the next n ( = batch_size) images from the path list
         and labels and loads the images into them into memory 
@@ -70,9 +70,13 @@ class DataGenerator:
         if self.__input_channels == 1:
             img = img.reshape((img.shape[0], img.shape[1], 1)).astype(np.float32)
 
-        # Expand labels to one hot encoding
-        one_hot_labels = np.zeros(self.__n_classes)
-        one_hot_labels[label] = 1
+        if one_hot_encoding:
+            # Expand labels to one hot encoding
+            one_hot_labels = np.zeros(self.__n_classes)
+            one_hot_labels[label] = 1
+            label = one_hot_labels
+        else:
+            label = np.asarray([label])
 
         # return array of images and labels
-        return img, one_hot_labels
+        return img, label
