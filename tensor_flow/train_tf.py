@@ -39,27 +39,27 @@ test_generator = DataReader(test_dir, [input_height, input_width], False, input_
 ((x_train, y_train), (x_test, y_test)) = (([], []), ([], []))
 
 for m in range(train_generator.get_data_size()):
-    vector = Vector(*train_generator.next(one_hot_encoding=False))
+    vector = Vector(*train_generator.next(one_hot_encoding=True))
     x_train.append(vector.get_x())
     y_train.append(vector.get_desired_outputs())
 
 x_train = np.array(x_train)
-y_train = np.array(y_train).reshape(-1)
+y_train = np.array(y_train)
 
 for m in range(test_generator.get_data_size()):
-    vector = Vector(*test_generator.next(one_hot_encoding=False))
+    vector = Vector(*test_generator.next(one_hot_encoding=True))
     x_test.append(vector.get_x())
     y_test.append(vector.get_desired_outputs())
 
 x_test = np.array(x_test)
-y_test = np.array(y_test).reshape(-1)
+y_test = np.array(y_test)
 
 model = keras.models.Sequential([
     keras.layers.Dense(num_classes, activation='sigmoid'),
 ])
 
 model.compile(
-    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=False),
+    loss=keras.losses.BinaryCrossentropy(from_logits=False),
     optimizer=keras.optimizers.SGD(learning_rate=learning_rate),
     metrics=['accuracy']
 )
@@ -74,21 +74,20 @@ model.fit(
     callbacks=[tensorboard_callback],
 )
 
-
 # Test the model on the entire test set
 print(f'{datetime.now()} Start testing...')
 passed = 0
 for i in range(len(x_test)):
-    predictions = model(x_test[i:i+1]).numpy()
-    print(predictions)
+    y = model.predict(x_test[i:i+1], verbose=0).reshape(-1)
+    print(f'------------------------------ Test image #{i} ------------------------------')
+    print(f'neurons outputs: {y}')
+    print(f'neurons outputs (percent): {"%, ".join([str(round(p*100,2)) for p in y.tolist()])}%')
 
-#     prediction = sess.run(tf.nn.sigmoid(model.output), feed_dict={x: xs})
-#
-#     d_max_idx = get_max_neuron_idx(list(ds.reshape(ds[0].shape)))
-#     y_max_idx = get_max_neuron_idx(prediction[0])
-#     if y_max_idx == d_max_idx:
-#         passed += 1
-#     print("{} recognized as {}".format(d_max_idx, y_max_idx))
-#
-# accuracy = passed / test_generator.get_data_size() * 100.0
-# print("Accuracy: {:.4f}%".format(accuracy))
+    d_max_idx = get_max_neuron_idx(y_test[i])
+    y_max_idx = get_max_neuron_idx(y)
+    if y_max_idx == d_max_idx:
+        passed += 1
+    print(f'{d_max_idx} recognized as {y_max_idx}')
+
+accuracy = passed / test_generator.get_data_size() * 100.0
+print("Accuracy: {:.4f}%".format(accuracy))
