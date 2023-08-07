@@ -17,7 +17,7 @@ def get_max_neuron_idx(neurons):
 
 
 # Learning params
-learning_rate = 0.01
+learning_rate = 1e-5
 num_epochs = 10
 
 # Network params
@@ -55,11 +55,13 @@ x_test = np.array(x_test)
 y_test = np.array(y_test)
 
 model = keras.models.Sequential([
-    keras.layers.Dense(num_classes, activation='sigmoid'),
+    keras.layers.Dense(num_classes, activation='sigmoid',
+                       kernel_initializer=keras.initializers.RandomUniform(minval=-0.0003, maxval=0.0003, seed=123),
+                       bias_initializer=keras.initializers.RandomUniform(minval=-0.0003, maxval=0.0003, seed=123)),
 ])
 
 model.compile(
-    loss=keras.losses.BinaryCrossentropy(from_logits=False),
+    loss=keras.losses.MeanSquaredError(),
     optimizer=keras.optimizers.SGD(learning_rate=learning_rate),
     metrics=['accuracy']
 )
