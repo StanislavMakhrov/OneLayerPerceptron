@@ -25,7 +25,6 @@ input_channels = 1
 input_height = 28
 input_width = 28
 num_classes = 6
-save_histogram = False
 
 log_dir = "../logs/" + datetime.now().strftime("%Y-%m-%d.%H-%M-%S")
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir)
