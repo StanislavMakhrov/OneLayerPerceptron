@@ -1,9 +1,8 @@
-import os
 from tensorflow import keras
 from datareader import DataReader
 from datetime import datetime
 import numpy as np
-from tensor_flow.vector import Vector
+from vector import Vector
 
 
 def get_max_neuron_idx(neurons):
@@ -17,8 +16,8 @@ def get_max_neuron_idx(neurons):
 
 
 # Learning params
-learning_rate = 1e-5
-num_epochs = 10
+learning_rate = 1e-2
+num_epochs = 20
 
 # Network params
 input_channels = 1
@@ -26,11 +25,11 @@ input_height = 28
 input_width = 28
 num_classes = 6
 
-log_dir = "../logs/" + datetime.now().strftime("%Y-%m-%d.%H-%M-%S")
+log_dir = "logs/" + datetime.now().strftime("%Y-%m-%d.%H-%M-%S")
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir)
 
-train_dir = '../data/train'
-test_dir = '../data/test'
+train_dir = 'data/train'
+test_dir = 'data/test'
 
 train_generator = DataReader(train_dir, [input_height, input_width], True, input_channels, num_classes).get_generator()
 test_generator = DataReader(test_dir, [input_height, input_width], False, input_channels, num_classes).get_generator()
@@ -54,14 +53,13 @@ x_test = np.array(x_test)
 y_test = np.array(y_test)
 
 model = keras.models.Sequential([
-    keras.layers.Dense(num_classes, activation='sigmoid',
-                       kernel_initializer=keras.initializers.RandomUniform(minval=-0.0003, maxval=0.0003, seed=123),
-                       bias_initializer=keras.initializers.RandomUniform(minval=-0.0003, maxval=0.0003, seed=123)),
+    keras.layers.Dense(128, activation='sigmoid'),
+    keras.layers.Dense(num_classes, activation='sigmoid'),
 ])
 
 model.compile(
     loss=keras.losses.MeanSquaredError(),
-    optimizer=keras.optimizers.SGD(learning_rate=learning_rate),
+    optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
     metrics=['accuracy']
 )
 
